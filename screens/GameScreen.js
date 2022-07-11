@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { StyleSheet, View, Text, Button, Alert } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, FlatList } from 'react-native';
 import Card from '../components/Card';
 import NumberContainer from '../components/NumberContainer';
 
@@ -19,16 +19,27 @@ const generateRandomBetween = (min, max, exclude) => {
 const GameScreen = props => {
 	const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, props.userChoice));
 	const [rounds, setRounds] = useState(0);
+	const [attempt, setAttempt] = useState([]);
 
 	const currentLow = useRef(1);
 	const currentHigh = useRef(100)
 
 	const { userChoice, onGameOver } = props;
 
+	const maxAttempts = 5;
+
 	useEffect(() => {
 		if (currentGuess === props.userChoice) {
 			props.onGameOver(rounds);
+			setAttempt([])
 		}
+
+		if (rounds === maxAttempts) {
+			props.onWin(rounds)
+		}
+
+		setAttempt((attempts) => [...attempts, { id: Math.random().toString(), value: currentGuess }])
+
 	}, [currentGuess, userChoice, onGameOver]);
 
 	const nextGuessHandler = direction => {
@@ -56,6 +67,13 @@ const GameScreen = props => {
 				<Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
 				<Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
 			</Card>
+			<FlatList
+				keyExtractor={(item, index) => item.id}
+				data={attempt}
+				renderItem={itemData => (
+					<Text>{itemData.item.value}</Text>
+				)} />
+
 		</View>
 	);
 }

@@ -4,6 +4,7 @@ import Header from './components/Header'
 import GameScreen from './screens/GameScreen';
 import StartGameScreen from './screens/StartGameScreen'
 import GameOverScreen from './screens/GameOverScreen'
+import WinScreen from './screens/WinScreen';
 
 export default function App() {
 
@@ -19,16 +20,18 @@ export default function App() {
 		setUserNumber(selectedNumber);
 	};
 
-	const GameOverHandler = (numOfRounds) => {
+	const gameOverHandler = (numOfRounds) => {
 		setGuessRounds(numOfRounds);
 	};
 
 	let content = <StartGameScreen onStartGame={startGameHandler} />
 
-	if (userNumber && guessRounds <= 0) {
-		content = <GameScreen userChoice={userNumber} onGameOver={GameOverHandler} />
-	} else if (guessRounds > 0) {
+	if (userNumber > 0 && guessRounds === 0) {
+		content = <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} onWin={gameOverHandler} />
+	} else if (userNumber !== 0 && guessRounds < 7 && guessRounds > 0) {
 		content = <GameOverScreen roundsNumber={guessRounds} userNumber={userNumber} onRestart={configureNewGameHandler} />
+	} else if (guessRounds > 0 && guessRounds === 7) {
+		content = <WinScreen onRestart={configureNewGameHandler} />
 	}
 
 	return (
