@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
 		width: 300,
 		maxWidth: '80%',
 		alignItems: 'center',
+		padding: 20
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
 	},
 	summaryContainer: {
 		marginTop: 20,
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: 20
 	}
 
 });

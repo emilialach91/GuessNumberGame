@@ -26,7 +26,7 @@ const GameScreen = props => {
 
 	const { userChoice, onGameOver } = props;
 
-	const maxAttempts = 5;
+	const maxAttempts = 6;
 
 	useEffect(() => {
 		if (currentGuess === props.userChoice) {
@@ -38,7 +38,7 @@ const GameScreen = props => {
 			props.onWin(rounds)
 		}
 
-		setAttempt((attempts) => [...attempts, { id: Math.random().toString(), value: currentGuess }])
+		setAttempt((attempts) => [...attempts, { id: rounds + 1, value: currentGuess }]);
 
 	}, [currentGuess, userChoice, onGameOver]);
 
@@ -61,19 +61,29 @@ const GameScreen = props => {
 
 	return (
 		<View style={styles.screen}>
+			<Card style={styles.rowContainer}>
+				<Text>Your selected number is</Text>
+				<Text style={styles.userNumber}>{userChoice}</Text>
+			</Card>
 			<Text>Opponent's Guess</Text>
 			<NumberContainer>{currentGuess}</NumberContainer>
 			<Card style={styles.buttonsContainer}>
 				<Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
 				<Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
 			</Card>
-			<FlatList
-				keyExtractor={(item, index) => item.id}
-				data={attempt}
-				renderItem={itemData => (
-					<Text>{itemData.item.value}</Text>
-				)} />
 
+			<View style={styles.guessContainer}>
+				<Text style={styles.title}>Computer's guess:</Text>
+				<FlatList
+					keyExtractor={(item, index) => item.id}
+					data={attempt}
+					renderItem={itemData => (
+						<View style={styles.list}>
+							<Text style={styles.guessValue}># {itemData.item.id}</Text>
+							<Text style={styles.guessValue}>{itemData.item.value}</Text>
+						</View>
+					)} />
+			</View>
 		</View>
 	);
 }
@@ -84,13 +94,37 @@ const styles = StyleSheet.create({
 		padding: 10,
 		alignItems: 'center',
 	},
+	rowContainer: {
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		maxWidth: '80%',
+		padding: 10,
+		marginBottom: 50
+	},
 	buttonsContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		marginTop: 20,
 		width: 300,
 		maxWidth: '80%',
-	}
+		padding: 20,
+		marginBottom: 30
+	},
+	userNumber: {
+		fontSize: 18,
+		fontWeight: '600',
+		marginLeft: 10
+	},
+	title: {
+		fontWeight: 'bold',
+		fontSize: 16
+	},
+	list: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		paddingTop: 10
+	},
 
 });
 
