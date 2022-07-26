@@ -11,7 +11,7 @@ export default function App() {
 
 	const [userNumber, setUserNumber] = useState()
 	const [guessRounds, setGuessRounds] = useState(0)
-	const [showMe, setShowMe] = useState(true)
+	const [showMe, setShowMe] = useState()
 
 	const configureNewGameHandler = () => {
 		setGuessRounds(0);
@@ -26,8 +26,8 @@ export default function App() {
 		setGuessRounds(numOfRounds);
 	};
 
-	const hideRulesScreen = (x) => {
-		setShowMe(x);
+	const hideRulesScreen = () => {
+		setShowMe(false);
 	};
 
 	let content = <RulesScreen onShowMe={hideRulesScreen} />
@@ -56,5 +56,5 @@ export default function App() {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1
-	},
+	}
 });
