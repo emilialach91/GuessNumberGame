@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert, Button, } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { Menu, Provider, Divider } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -8,6 +8,18 @@ const MenuExample = props => {
 
 	const closeMenu = () => setVisible(false);
 	const openMenu = () => setVisible(true);
+
+	const alertButtonHandler = () => {
+		Alert.alert(
+			"End the Game",
+			"Are you sure you want to end this game?",
+			[
+				{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+				{ text: "Yes", onPress: () => props.onEndGame() }
+			]
+		);
+		closeMenu()
+	}
 
 	return (
 		<Provider style={styles.container}>
@@ -24,7 +36,7 @@ const MenuExample = props => {
 								"Rules",
 								"Choose a number from 0 to 99 and check if the computer can guess your number in seven moves.",
 								[
-									{ text: "OK", onPress: () => console.log("OK Pressed") }
+									{ text: "OK", onPress: () => closeMenu() }
 								]
 							);
 						}}
@@ -32,16 +44,7 @@ const MenuExample = props => {
 					/>
 					<Divider />
 					<Menu.Item
-						onPress={() => {
-							Alert.alert(
-								"End the Game",
-								"Are you sure you want to end this game?",
-								[
-									{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
-									{ text: "Yes", onPress: () => props.onEndGame() }
-								]
-							);
-						}}
+						onPress={() => alertButtonHandler()}
 						title="End the Game"
 					/>
 				</Menu>
