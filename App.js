@@ -6,6 +6,7 @@ import StartGameScreen from './screens/StartGameScreen'
 import GameOverScreen from './screens/GameOverScreen'
 import WinScreen from './screens/WinScreen';
 import RulesScreen from './screens/RulesScreen';
+import MenuExample from './components/Menu';
 
 export default function App() {
 
@@ -30,10 +31,15 @@ export default function App() {
 		setShowMe(false);
 	};
 
+	const showRulesScreen = () => {
+		setShowMe(true);
+	}
+
 	let content = <RulesScreen onShowMe={hideRulesScreen} />
+	let menu = null;
 
 	if (showMe === false) {
-
+		menu = <MenuExample onEndGame={showRulesScreen} />
 		content = <StartGameScreen onStartGame={startGameHandler} />
 
 		if (userNumber > 0 && guessRounds === 0) {
@@ -48,6 +54,7 @@ export default function App() {
 	return (
 		<View style={styles.screen}>
 			<Header title="Guess a Number" />
+			{menu}
 			{content}
 		</View>
 	);

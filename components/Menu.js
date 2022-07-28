@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
-import { Menu, Provider } from 'react-native-paper';
+import { View, StyleSheet, Alert, Button, } from 'react-native';
+import { Menu, Provider, Divider } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 
-const MenuExample = () => {
+const MenuExample = props => {
 	const [visible, setVisible] = useState(false);
 
 	const closeMenu = () => setVisible(false);
-	const openMenu = (v) => setVisible(true);
+	const openMenu = () => setVisible(true);
+
 	return (
-		<Provider>
-			<View style={styles.container}>
+		<Provider style={styles.container}>
+			<View>
 				<Menu
 					visible={visible}
 					onDismiss={closeMenu}
@@ -19,15 +20,29 @@ const MenuExample = () => {
 					}>
 					<Menu.Item
 						onPress={() => {
-							Alert.alert('Action : ', 'Dupa');
+							Alert.alert(
+								"Rules",
+								"Choose a number from 0 to 99 and check if the computer can guess your number in seven moves.",
+								[
+									{ text: "OK", onPress: () => console.log("OK Pressed") }
+								]
+							);
 						}}
-						title="Print"
+						title="Rules"
 					/>
+					<Divider />
 					<Menu.Item
 						onPress={() => {
-							Alert.alert('Action : ', 'Forward');
+							Alert.alert(
+								"End the Game",
+								"Are you sure you want to end this game?",
+								[
+									{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+									{ text: "Yes", onPress: () => props.onEndGame() }
+								]
+							);
 						}}
-						title="Forward"
+						title="End the Game"
 					/>
 				</Menu>
 			</View>
@@ -42,6 +57,12 @@ const styles = StyleSheet.create({
 		padding: 50,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		height: 200,
+		backgroundColor: 'red',
+		width: 20,
+		height: 20,
+		zIndex: 100,
+		top: 0
 	},
 });
+
+
