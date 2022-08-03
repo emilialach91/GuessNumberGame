@@ -36,12 +36,45 @@ const StartGameScreen = props => {
 
 	let confirmedOutput
 
-	if (confirmed) {
+	if (!confirmed) {
+		confirmedOutput = (
+			<Card style={styles.inputContainer}>
+				<Text style={styles.title}>Start a New Game</Text>
+				<Text style={styles.description}>Select Your Number</Text>
+				<Input style={styles.input}
+					blurOnSubmit
+					autoCapitalize='none'
+					autoCorrect={false}
+					keyboardType="number-pad"
+					maxLength={2}
+					onChangeText={numberInputHandler}
+					value={enteredValue}
+					textAlign="center"
+				/>
+				<View style={styles.buttonsContainer}>
+					<View style={styles.button}>
+						<Button title="Reset" onPress={resetInputHandler} color={Colors.primary} />
+					</View>
+					<View style={styles.button}>
+						<Button title="Confirm" onPress={confirmInputHandler} color={Colors.secondary} />
+					</View>
+				</View>
+			</Card>
+		)
+	} else {
 		confirmedOutput = (
 			<Card style={styles.summaryContainer}>
+				<Text style={styles.title}>Start a New Game</Text>
 				<Text>You selected</Text>
 				<NumberContainer>{selectedNumber}</NumberContainer>
-				<Button title="Start Game" onPress={() => props.onStartGame(selectedNumber)} />
+				<View style={styles.buttonsContainer}>
+					<View style={styles.button}>
+						<Button title="Cancel" onPress={resetInputHandler} color={Colors.primary} />
+					</View>
+					<View style={styles.button}>
+						<Button title="Start" onPress={() => props.onStartGame(selectedNumber)} />
+					</View>
+				</View>
 			</Card>
 		)
 	}
@@ -49,28 +82,6 @@ const StartGameScreen = props => {
 	return (
 		<TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
 			<View style={styles.screen}>
-				<Text style={styles.title}>Start a New Game</Text>
-				<Card style={styles.inputContainer}>
-					<Text>Select a Number</Text>
-					<Input style={styles.input}
-						blurOnSubmit
-						autoCapitalize='none'
-						autoCorrect={false}
-						keyboardType="number-pad"
-						maxLength={2}
-						onChangeText={numberInputHandler}
-						value={enteredValue}
-						textAlign="center"
-					/>
-					<View style={styles.buttonsContainer}>
-						<View style={styles.button}>
-							<Button title="Reset" onPress={resetInputHandler} color={Colors.primary} />
-						</View>
-						<View style={styles.button}>
-							<Button title="Confirm" onPress={confirmInputHandler} color={Colors.secondary} />
-						</View>
-					</View>
-				</Card>
 				{confirmedOutput}
 			</View>
 		</TouchableWithoutFeedback>
@@ -83,17 +94,26 @@ const styles = StyleSheet.create({
 		flex: 1,
 		padding: 10,
 		alignItems: 'center',
+		position: 'relative',
+		zIndex: 1,
+		backgroundColor: Colors.background
 	},
 	title: {
-		color: 'black',
+		color: Colors.title,
 		fontSize: 20,
 		marginVertical: 10,
+	},
+	description: {
+		marginTop: 30
 	},
 	inputContainer: {
 		width: 300,
 		maxWidth: '80%',
 		alignItems: 'center',
-		padding: 20
+		padding: 20,
+		height: '50%',
+		marginTop: 50,
+
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
@@ -109,9 +129,10 @@ const styles = StyleSheet.create({
 		alignContent: 'center'
 	},
 	summaryContainer: {
-		marginTop: 20,
 		alignItems: 'center',
-		padding: 20
+		padding: 20,
+		width: 300,
+
 	}
 
 });

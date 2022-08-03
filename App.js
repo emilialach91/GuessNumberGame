@@ -32,7 +32,8 @@ export default function App() {
 	};
 
 	const showRulesScreen = () => {
-		setShowMe(true);
+		setGuessRounds(0);
+		setUserNumber(null);
 	}
 
 	let content = <RulesScreen onShowMe={hideRulesScreen} />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { Menu, Provider, Divider } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/colors'
 
 const MenuExample = props => {
 	const [visible, setVisible] = useState(false);
@@ -63,17 +64,18 @@ export default MenuExample;
 
 const styles = StyleSheet.create({
 	container: {
-		height: 40,
-		width: 40,
 		margin: 10,
-		zIndex: 1000
+		zIndex: 1000,
+		backgroundColor: Colors.background,
+		position: 'absolute',
+		top: 90,
+		left: 0
 	},
 	provider: {
 		height: 40,
 		width: 40,
 	},
 	menu: {
-		zIndex: 1000,
 		width: 140,
 		transform: [{ translateY: -80 }]
 	}

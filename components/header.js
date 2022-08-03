@@ -2,13 +2,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import Colors from '../constants/colors'
-import MenuExample from './Menu';
-
 
 const Header = props => {
 	return (
-		<View style={styles.header}>
-			<MenuExample style={styles.menu} />
+		<View style={styles.header} >
 			<Text style={styles.headerTitle}>{props.title}</Text>
 		</View>
 	);
@@ -35,12 +32,9 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 	},
 	headerTitle: {
-		color: 'black',
-		fontSize: 18
+		color: Colors.title,
+		fontSize: 18,
 	},
-	menu: {
-		position: 'absolute'
-	}
 });
 
 export default Header
